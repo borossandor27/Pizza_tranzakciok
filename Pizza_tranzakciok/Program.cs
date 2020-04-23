@@ -1,9 +1,6 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MySql.Data.MySqlClient;
 
 namespace Pizza_tranzakciok
 {
@@ -56,11 +53,11 @@ namespace Pizza_tranzakciok
                     }
 
                     trans.Commit(); //-- Az adatbázisműveletek rögzítése
-                    Console.WriteLine("Az adatok rögzítése sikeres!");
+                    Console.WriteLine("Az adatok rögzítése MINDKÉT TÁBLÁBAN sikeres!");
                 }
                 catch (MySqlException ex)
                 {
-                    trans.Rollback(); //-- A megkezdett műveletek elvetése
+                    trans.Rollback(); //-- A megkezdett műveletek elvetése MINDKÉT TÁBLÁBAN!
                     Console.WriteLine(ex.Message + "\n\nAz adatok rögzítése sikertelen!");
                     Console.ReadKey();
                     //return; //-- Program vége!
@@ -98,7 +95,7 @@ namespace Pizza_tranzakciok
         static void Uj_rendelesek()
         {
             Random r = new Random();
-            int rendelesszam = r.Next(5) + 3;
+            int rendelesszam = r.Next(5) + 3; //-- Előállítandó rendelések száma
             for (int i = 0; i < rendelesszam; i++)
             {
                 Rendeles uj = new Rendeles();
